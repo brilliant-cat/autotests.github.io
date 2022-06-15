@@ -1,11 +1,9 @@
-import org.apache.commons.io.FileUtils;
+import com.example.Screenshot;
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HomePageTest {
@@ -21,12 +19,20 @@ public class HomePageTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
+    //    @AfterClass
+//    public static void tearDown() throws IOException {
+//        var sourceFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//        FileUtils.copyFile(sourceFile, new File("c:\\Users\\User\\Pictures\\autotest_Java_screenshot\\screenshot.jpg"));
+//        driver.quit();
+//    }
+
     @AfterClass
-    public static void tearDown() throws IOException {
-        var sourceFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(sourceFile, new File("c:\\Users\\User\\Pictures\\autotest_Java_screenshot\\screenshot.jpg"));
+    public static void tearDown() {
         driver.quit();
     }
+
+    @Rule
+    public Screenshot rule = new Screenshot(driver, "target\\surefire-reports");
 
     private static By booksCategoryCardLocator = By.xpath("//*[.='Книги']/../*[contains(@class, 'promo-link-btn')]");
     private static By titlePageLocator = By.xpath("//*[contains(@class, 'entry-title')]");

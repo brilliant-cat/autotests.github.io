@@ -1,16 +1,9 @@
-import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.example.Screenshot;
+import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CatalogPageTest {
@@ -27,23 +20,57 @@ public class CatalogPageTest {
     }
 
     @AfterClass
-    public static void tearDown() throws IOException {
-        var sourceFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(sourceFile, new File("c:\\Users\\User\\Pictures\\autotest_Java_screenshot\\screenshot.jpg"));
+    public static void tearDown() {
         driver.quit();
     }
+
+    @Rule
+    public Screenshot rule = new Screenshot(driver, "target\\surefire-reports");
 
     private static By titlePageLocator = By.xpath("//*[contains(@class, 'entry-title')]");
     private static By catalogHeaderMenuLocator = By.xpath("//*[contains(@class, 'store-menu')]//*[.='Каталог']");
     private static By titlePageCartLocator = By.xpath("//span[.='Корзина']");
+    private static By addToCartButtonLocator = By.xpath("(//*[.= 'В корзину'])[1]"); // на странице каталога
+    private static By searchFieldLocator = By.className("search-field");
+    private static By searchButtonLocator = By.className("searchsubmit");
+    private static By moreButtonLocator = By.xpath("//*[.= 'Подробнее']"); // на странице каталога
+    private static By twoPageButtonLocator = By.xpath("//a[.= '2']");
+    private static By pageButtonInactiveLocator = By.cssSelector("[class $= 'current']");
+    private static By productCountLocator = By.className("woocommerce-result-count");
+    private static By resultCountLocator = By.className("product");
+    private static By withoutCategoryLocator = By.xpath("//*[.= 'Без категории']");
+    private static By withoutCategoryCountLocator = By.xpath("//*[.= 'Без категории']/following-sibling::span");
+    private static By appliancesCategoryLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Бытовая техника']");
+    private static By appliancesCategoryCountLocator = By.xpath("//*[.= 'Бытовая техника']/following-sibling::span");
+    private static By catalogLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Каталог']");
+    private static By catalogLinkCountLocator = By.xpath("//*[.= 'Каталог']/following-sibling::span");
+    private static By nextPageButton = By.cssSelector(".next.page-numbers");
+    private static By booksLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Книги']");
+    private static By booksLinkCountLocator = By.xpath("//*[.= 'Книги']/following-sibling::span");
+    private static By clothesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Одежда']");
+    private static By clothesLinkCountLocator = By.xpath("//*[.= 'Одежда']/following-sibling::span");
+    private static By tabletsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Планшеты']");
+    private static By tabletsLinkCountLocator = By.xpath("//*[.= 'Планшеты']/following-sibling::span");
+    private static By laundryWashersLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Стиральные машины']");
+    private static By laundryWashersLinkCountLocator = By.xpath("//*[.= 'Стиральные машины']/following-sibling::span");
+    private static By tvLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Телевизоры']");
+    private static By tvLinkCountLocator = By.xpath("//*[.= 'Телевизоры']/following-sibling::span");
+    private static By phonesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Телефоны']");
+    private static By phonesLinkCountLocator = By.xpath("//*[.= 'Телефоны']/following-sibling::span");
+    private static By photosAndVideosLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Фото/видео']");
+    private static By photosAndVideosLinkCountLocator = By.xpath("//*[.= 'Фото/видео']/following-sibling::span");
+    private static By refrigeratorsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Холодильники']");
+    private static By refrigeratorsLinkCountLocator = By.xpath("//*[.= 'Холодильники']/following-sibling::span");
+    private static By watchesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Часы']");
+    private static By watchesLinkCountLocator = By.xpath("//*[.= 'Часы']/following-sibling::span");
+    private static By electronicsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Электроника']");
+    private static By electronicsLinkCountLocator = By.xpath("//*[.= 'Электроника']/following-sibling::span");
 
     // Отображаемые товары на странице результатов соответствуют запросу поиска
     @Test
     public void testHomePage_SearchProducts_SearchResultIsTrue() {
         //arrange
         var requestLocator = "canon";
-        var searchFieldLocator = By.className("search-field");
-        var searchButtonLocator = By.className("searchsubmit");
         var titleProductsSearchResultLocator = By.cssSelector("a.collection_title[href*= 'canon']");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -60,8 +87,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapAddToCartButton_TitleButtonTrue() {
         //arrange
-        var addToCartButtonLocator = By.xpath("(//*[.= 'В корзину'])[1]"); // на странице каталога
-        var moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -79,8 +104,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapMoreButton_OpenCheckoutPage() {
         //arrange
-        var addToCartButtonLocator = By.xpath("(//*[.= 'В корзину'])[1]"); // на странице каталога
-        var moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -97,34 +120,27 @@ public class CatalogPageTest {
 
     // При нажатии на страницу "2" открывается соответствующая страница (кнопка "2" не активна)
     @Test
-    public void testCatalogPage_TapTwoNumberButton_OpenTwoNumberPage() {
+    public void testCatalogPage_TapTwoPageButton_OpenTwoPage() {
         //arrange
-        var twoNumberButtonLocator = By.xpath("//a[.= '2']");
-        var moreButtonLocator = By.cssSelector("span[aria-current]");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
         //act
         driver.findElement(catalogHeaderMenuLocator).click();
         driver.findElement(catalogHeaderMenuLocator).sendKeys(Keys.END);
-        driver.findElement(twoNumberButtonLocator).click();
+        driver.findElement(twoPageButtonLocator).click();
         driver.findElement(catalogHeaderMenuLocator).sendKeys(Keys.PAGE_DOWN);
 
         //assert
         var expectedNumber = "2";
-        var actualNumber = driver.findElement(moreButtonLocator).getText();
+        var actualNumber = driver.findElement(pageButtonInactiveLocator).getText();
         Assert.assertTrue(String.format("Номер страницы не соответствует. Сейчас: %s, Ожидали: %s", actualNumber, expectedNumber), actualNumber.contains(expectedNumber));
     }
-
-    private static By productCountLocator = By.className("woocommerce-result-count");
-    private static By resultCountLocator = By.className("product");
 
     // При нажатии на категорию "Без категории" открывается соответствующая страница (количество товаров соответствует)
     @Test
     public void testCatalogPage_TapWithoutCategoryLink_TitlePageTrue() {
         //arrange
-        var withoutCategoryLocator = By.xpath("//*[.= 'Без категории']");
-        var withoutCategoryCountLocator = By.xpath("//*[.= 'Без категории']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -146,8 +162,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapAppliancesLink_TitlePageTrue() {
         //arrange
-        var appliancesCategoryLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Бытовая техника']");
-        var appliancesCategoryCountLocator = By.xpath("//*[.= 'Бытовая техника']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -169,9 +183,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapCatalogLink_TitlePageTrue() {
         //arrange
-        var catalogLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Каталог']");
-        var catalogLinkCountLocator = By.xpath("//*[.= 'Каталог']/following-sibling::span");
-        var nextPageButton = By.cssSelector(".next.page-numbers");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -200,8 +211,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapBooksLink_TitlePageTrue() {
         //arrange
-        var booksLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Книги']");
-        var booksLinkCountLocator = By.xpath("//*[.= 'Книги']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -223,8 +232,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapClothesLink_TitlePageTrue() {
         //arrange
-        var clothesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Одежда']");
-        var clothesLinkCountLocator = By.xpath("//*[.= 'Одежда']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -246,8 +253,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapTabletsLink_TitlePageTrue() {
         //arrange
-        var tabletsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Планшеты']");
-        var tabletsLinkCountLocator = By.xpath("//*[.= 'Планшеты']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -269,8 +274,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapLaundryWashersLink_TitlePageTrue() {
         //arrange
-        var laundryWashersLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Стиральные машины']");
-        var laundryWashersLinkCountLocator = By.xpath("//*[.= 'Стиральные машины']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -292,8 +295,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapTvLink_TitlePageTrue() {
         //arrange
-        var tvLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Телевизоры']");
-        var tvLinkCountLocator = By.xpath("//*[.= 'Телевизоры']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -315,8 +316,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapPhonesLink_TitlePageTrue() {
         //arrange
-        var phonesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Телефоны']");
-        var phonesLinkCountLocator = By.xpath("//*[.= 'Телефоны']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -338,8 +337,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapPhotosAndVideosLink_TitlePageTrue() {
         //arrange
-        var photosAndVideosLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Фото/видео']");
-        var photosAndVideosLinkCountLocator = By.xpath("//*[.= 'Фото/видео']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -361,8 +358,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapRefrigeratorsLink_TitlePageTrue() {
         //arrange
-        var refrigeratorsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Холодильники']");
-        var refrigeratorsLinkCountLocator = By.xpath("//*[.= 'Холодильники']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -384,8 +379,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapWatchesLink_TitlePageTrue() {
         //arrange
-        var watchesLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Часы']");
-        var watchesLinkCountLocator = By.xpath("//*[.= 'Часы']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -407,8 +400,6 @@ public class CatalogPageTest {
     @Test
     public void testCatalogPage_TapElectronicsLink_TitlePageTrue() {
         //arrange
-        var electronicsLinkLocator = By.xpath("//*[contains(@class, 'cat-item')]/*[.= 'Электроника']");
-        var electronicsLinkCountLocator = By.xpath("//*[.= 'Электроника']/following-sibling::span");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 

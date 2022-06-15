@@ -1,15 +1,10 @@
-import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.example.Screenshot;
+import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class CartPageTest {
@@ -24,13 +19,13 @@ public class CartPageTest {
         wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-
     @AfterClass
-    public static void tearDown() throws IOException {
-        var sourceFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(sourceFile, new File("c:\\Users\\User\\Pictures\\autotest_Java_screenshot\\screenshot.jpg"));
+    public static void tearDown() {
         driver.quit();
     }
+
+    @Rule
+    public Screenshot rule = new Screenshot(driver, "target\\surefire-reports");
 
     private static By titlePageLocator = By.xpath("//*[contains(@class, 'entry-title')]");
     private static By catalogHeaderMenuLocator = By.xpath("//*[contains(@class, 'store-menu')]//*[.='Каталог']");
@@ -41,6 +36,12 @@ public class CartPageTest {
     private static By cartEmptyLocator = By.cssSelector(".woocommerce-cart-form__cart-item.cart_item");
     private static By restoreItemLocator = By.cssSelector("a.restore-item");
     private static By cartItemLocator = By.cssSelector(".woocommerce-cart-form .cart_item");
+    private static By couponCodeInputLocator = By.cssSelector("#coupon_code");
+    private static By applyCouponButtonLocator = By.cssSelector("[name = 'apply_coupon']");
+    private static By productPriceTotalLocator = By.className("cart-discount");
+    private static By warningMessageLocator = By.className("woocommerce-error");
+    private static By checkoutButtonLocator = By.className("checkout-button");
+    private static By backShopButtonLocator = By.className("wc-backward");
 
     // Удаление товара со страницы корзина
     @Test
@@ -85,7 +86,6 @@ public class CartPageTest {
     @Test
     public void testCartPage_TapBackToTheShop_TitlePageTrue() {
         //arrange
-        var backShopButtonLocator = By.className("wc-backward");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
         driver.findElement(catalogHeaderMenuLocator).click();
@@ -104,14 +104,10 @@ public class CartPageTest {
         Assert.assertTrue(String.format("Заголовок страницы не соответствует. Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));
     }
 
-    private static By couponCodeInputLocator = By.cssSelector("#coupon_code");
-    private static By applyCouponButtonLocator = By.cssSelector("[name = 'apply_coupon']");
-
     // При отправке валидного купона отображается скидка
     @Test
     public void testCartPage_ApplyValidCoupon_SaleIsDisplayed() {
         //arrange
-        var productPriceTotalLocator = By.className("cart-discount");
         var validCouponDataLocator = "sert500";
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -131,7 +127,6 @@ public class CartPageTest {
     @Test
     public void testCartPage_ApplyEmptyCoupon_warningMessageIsDisplayed() {
         //arrange
-        var warningMessageLocator = By.className("woocommerce-error");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
         driver.findElement(catalogHeaderMenuLocator).click();
@@ -152,7 +147,6 @@ public class CartPageTest {
     @Test
     public void testCartPage_ApplyInvalidCoupon_warningMessageIsDisplayed() {
         //arrange
-        var warningMessageLocator = By.className("woocommerce-error");
         var invalidCouponDataLocator = "sert50O";
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -170,8 +164,6 @@ public class CartPageTest {
         var actualMassage = driver.findElement(warningMessageLocator).getText();
         Assert.assertEquals("Текст сообщения не совпадает", expectedMassage, actualMassage);
     }
-
-    private static By checkoutButtonLocator = By.className("checkout-button");
 
     // При нажатии на кнопку "Оформить заказ" открывается соответствующая страница
     @Test
