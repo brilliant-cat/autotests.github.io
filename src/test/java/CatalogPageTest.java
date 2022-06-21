@@ -85,7 +85,7 @@ public class CatalogPageTest {
 
     // Название кнопки "В корзину" меняется на "Подробнее" при нажатии на нее
     @Test
-    public void testCatalogPage_TapAddToCartButton_TitleButtonTrue() {
+    public void testCatalogPage_ClickAddToCartButton_TitleButtonTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -102,7 +102,7 @@ public class CatalogPageTest {
 
     // При нажатии на кнопку "Подробнее" открывается страница Корзины
     @Test
-    public void testCatalogPage_TapMoreButton_OpenCheckoutPage() {
+    public void testCatalogPage_ClickMoreButton_OpenCheckoutPage() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -120,7 +120,7 @@ public class CatalogPageTest {
 
     // При нажатии на страницу "2" открывается соответствующая страница (кнопка "2" не активна)
     @Test
-    public void testCatalogPage_TapTwoPageButton_OpenTwoPage() {
+    public void testCatalogPage_ClickTwoPageButton_OpenTwoPage() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -139,7 +139,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Без категории" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapWithoutCategoryLink_TitlePageTrue() {
+    public void testCatalogPage_ClickWithoutCategoryLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -160,7 +160,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Бытовая техника" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapAppliancesLink_TitlePageTrue() {
+    public void testCatalogPage_ClickAppliancesLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -181,7 +181,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Каталог" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapCatalogLink_TitlePageTrue() {
+    public void testCatalogPage_ClickCatalogLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -209,7 +209,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Книги" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapBooksLink_TitlePageTrue() {
+    public void testCatalogPage_ClickBooksLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -230,7 +230,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Одежда" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapClothesLink_TitlePageTrue() {
+    public void testCatalogPage_ClickClothesLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -251,7 +251,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Планшеты" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapTabletsLink_TitlePageTrue() {
+    public void testCatalogPage_ClickTabletsLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -272,7 +272,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Стиральные машины" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapLaundryWashersLink_TitlePageTrue() {
+    public void testCatalogPage_ClickLaundryWashersLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -293,7 +293,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Телевизоры" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapTvLink_TitlePageTrue() {
+    public void testCatalogPage_ClickTvLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -314,7 +314,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Телефоны" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapPhonesLink_TitlePageTrue() {
+    public void testCatalogPage_ClickPhonesLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -335,7 +335,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Фото/видео" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapPhotosAndVideosLink_TitlePageTrue() {
+    public void testCatalogPage_ClickPhotosAndVideosLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -356,7 +356,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Холодильники" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapRefrigeratorsLink_TitlePageTrue() {
+    public void testCatalogPage_ClickRefrigeratorsLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -377,7 +377,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Часы" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapWatchesLink_TitlePageTrue() {
+    public void testCatalogPage_ClickWatchesLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -398,7 +398,7 @@ public class CatalogPageTest {
 
     // При нажатии на категорию "Электроника" открывается соответствующая страница (количество товаров соответствует)
     @Test
-    public void testCatalogPage_TapElectronicsLink_TitlePageTrue() {
+    public void testCatalogPage_ClickElectronicsLink_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");

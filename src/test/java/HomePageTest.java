@@ -44,7 +44,7 @@ public class HomePageTest {
     private static By cartHeaderMenuLocator = By.xpath("//*[contains(@class, 'store-menu')]//a[.='Корзина']");
     private static By titlePageCartLocator = By.xpath("//span[.='Корзина']");
     private static By checkoutHeaderMenuLocator = By.cssSelector(".store-menu [href$='checkout/']");
-    private static By titlePageCheckoutLocator = By.cssSelector(".post-title");
+    private static By titlePageH2Locator = By.cssSelector(".post-title");
     private static By appliancesSubMenuLocator = By.xpath("//*[contains(@class, 'sub-menu')]//*[.='Бытовая техника']");
     private static By refrigeratorsSubMenuLocator = By.xpath("//*[contains(@class, 'sub-menu')]//a[.='Холодильники']");
     private static By laundryWashersSubMenuLocator = By.xpath("//*[contains(@class, 'sub-menu')]//a[.='Стиральные машины']");
@@ -60,7 +60,7 @@ public class HomePageTest {
 
     // При нажатии на категорию "Книги" на главной странице открывается соответствующая страница
     @Test
-    public void testHomePage_TapCategoryBooks_TitlePageTrue() {
+    public void testHomePage_ClickCategoryBooks_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -78,7 +78,7 @@ public class HomePageTest {
 
     // При нажатии на категорию "Планшеты" на главной странице открывается соответствующая страница
     @Test
-    public void testHomePage_TapCategoryTablets_TitlePageTrue() {
+    public void testHomePage_ClickCategoryTablets_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -95,7 +95,7 @@ public class HomePageTest {
 
     // При нажатии на категорию "Фотоаппараты" на главной странице открывается соответствующая страница
     @Test
-    public void testHomePage_TapCategoryCameras_TitlePageTrue() {
+    public void testHomePage_ClickCategoryCameras_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -112,7 +112,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Каталог" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapHeaderMenuCatalog_TitlePageTrue() {
+    public void testHomePage_ClickHeaderMenuCatalog_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -129,7 +129,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Мой аккаунт" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapHeaderMenuMyAccount_TitlePageTrue() {
+    public void testHomePage_ClickHeaderMenuMyAccount_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -146,7 +146,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Корзина" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapHeaderMenuCart_TitlePageTrue() {
+    public void testHomePage_ClickHeaderMenuCart_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -163,7 +163,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Оформление заказа" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapHeaderMenuCheckout_TitlePageTrue() {
+    public void testHomePage_ClickHeaderMenuCheckout_TitlePageTrue() {
         //arrange
         var addToCartButtonLocator = By.xpath("(//li[contains(@aria-hidden, 'false')]//*[.= 'В корзину'])[1]"); // на главной странице
         var moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
@@ -176,15 +176,15 @@ public class HomePageTest {
         driver.findElement(checkoutHeaderMenuLocator).click();
 
         //assert
-        Assert.assertTrue("Заголовок \"Оформление заказа\" не отображается", driver.findElement(titlePageCheckoutLocator).isDisplayed());
+        Assert.assertTrue("Заголовок \"Оформление заказа\" не отображается", driver.findElement(titlePageH2Locator).isDisplayed());
         var expectedTitle = "Оформление заказа";
-        var actualTitle = driver.findElement(titlePageCheckoutLocator).getText();
+        var actualTitle = driver.findElement(titlePageH2Locator).getText();
         Assert.assertTrue(String.format("Неправильный заголовок страницы категории. Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));
     }
 
     // При нажатии на ссылку "Бытовая техника" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuAppliances_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuAppliances_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -202,7 +202,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Холодильники" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuRefrigerators_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuRefrigerators_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -221,7 +221,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Стиральные машины" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuLaundryWashers_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuLaundryWashers_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -241,7 +241,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Электроника" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuElectronics_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuElectronics_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -260,7 +260,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Телефоны" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuPhones_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuPhones_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -280,7 +280,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Планшеты" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuTablets_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuTablets_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -301,7 +301,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Телевизоры" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuTv_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuTv_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -323,7 +323,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Фото/видео" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuPhotosVideos_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuPhotosVideos_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -346,7 +346,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Часы" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuWatches_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuWatches_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -370,7 +370,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Книги" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuBooks_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuBooks_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -390,7 +390,7 @@ public class HomePageTest {
 
     // При нажатии на ссылку "Одежда" в главном меню сайта открывается соответствующая страница
     @Test
-    public void testHomePage_TapSubMenuClothes_TitlePageTrue() {
+    public void testHomePage_ClickSubMenuClothes_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");

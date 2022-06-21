@@ -42,10 +42,13 @@ public class CartPageTest {
     private static By warningMessageLocator = By.className("woocommerce-error");
     private static By checkoutButtonLocator = By.className("checkout-button");
     private static By backShopButtonLocator = By.className("wc-backward");
+    private static By couponLinkLocator = By.className("showcoupon");
+    private static By couponSuccessMessageLocator = By.className("woocommerce-message");
+
 
     // Удаление товара со страницы корзина
     @Test
-    public void testCartPage_TapRemoveButton_DeletedProductIsTrue() {
+    public void testCartPage_ClickRemoveButton_DeletedProductIsTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -64,7 +67,7 @@ public class CartPageTest {
 
     // Вернуть удаленный товар
     @Test
-    public void testCartPage_TapRestore_ProductInCartIsTrue() {
+    public void testCartPage_ClickRestore_ProductInCartIsTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -84,7 +87,7 @@ public class CartPageTest {
 
     // При нажатии на кнопку "Назад в магазин" открывается соответствующая страница
     @Test
-    public void testCartPage_TapBackToTheShop_TitlePageTrue() {
+    public void testCartPage_ClickBackToTheShop_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -94,7 +97,7 @@ public class CartPageTest {
         driver.findElement(removeButtonLocator).click();
 
         //act
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(backShopButtonLocator));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(backShopButtonLocator)); // ожидание когда элемент будет кликабельным
         ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
         //wait.until(ExpectedConditions.elementToBeClickable(backShopButtonLocator)).click();
 
@@ -143,7 +146,7 @@ public class CartPageTest {
         Assert.assertEquals("Текст сообщения не совпадает", expectedMassage, actualMassage);
     }
 
-    // При отправке не валидного купона отображается соответствующее сообщение
+    // При отправке невалидного купона отображается соответствующее сообщение
     @Test
     public void testCartPage_ApplyInvalidCoupon_warningMessageIsDisplayed() {
         //arrange
@@ -167,7 +170,7 @@ public class CartPageTest {
 
     // При нажатии на кнопку "Оформить заказ" открывается соответствующая страница
     @Test
-    public void testCartPage_TapCheckoutButton_TitlePageTrue() {
+    public void testCartPage_ClickCheckoutButton_TitlePageTrue() {
         //arrange
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -182,5 +185,29 @@ public class CartPageTest {
         var expectedTitle = "Оформление заказа";
         var actualTitle = driver.findElement(titlePageCheckoutLocator).getText();
         Assert.assertTrue(String.format("Заголовок страницы не соответствует. Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));
+    }
+
+    // Ввод купона со страницы оформления заказа
+    @Test
+    public void testCheckoutPage_ApplyValidCoupon_SuccessMessageIsDisplayed() {
+        //arrange
+        var validCouponDataLocator = "sert500";
+
+        driver.navigate().to("http://intershop5.skillbox.ru/");
+        driver.findElement(catalogHeaderMenuLocator).click();
+        driver.findElement(addToCartButtonLocator).click();
+        driver.findElement(moreButtonLocator).click();
+        driver.findElement(checkoutButtonLocator).click();
+
+        //act
+        driver.findElement(couponLinkLocator).click();
+        driver.findElement(couponCodeInputLocator).sendKeys(validCouponDataLocator);
+        driver.findElement(applyCouponButtonLocator).click();
+
+        //assert
+        Assert.assertTrue("Сообщение не отображается", driver.findElement(couponSuccessMessageLocator).isDisplayed());
+        var expectedMessage = "Купон успешно добавлен.";
+        var actualMessage = driver.findElement(couponSuccessMessageLocator).getText();
+        Assert.assertTrue(String.format("Текст сообщения не совпадает. Сейчас: %s, Ожидали: %s", actualMessage, expectedMessage), actualMessage.contains(expectedMessage));
     }
 }
