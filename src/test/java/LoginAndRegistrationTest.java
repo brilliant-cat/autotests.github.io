@@ -82,6 +82,7 @@ public class LoginAndRegistrationTest {
         var actualLogoutText = driver.findElement(logoutLocator).getText();
         Assert.assertTrue("Текст \"Выйти\" не отображается", driver.findElement(logoutLocator).isDisplayed());
         Assert.assertTrue(String.format("Неправильный текст после регистрации. Сейчас: %s, Ожидали: %s", actualLogoutText, expectedLogoutText), actualLogoutText.contains(expectedLogoutText));
+        driver.findElement(logoutLocator).click();
     }
 
     // Регистрация пользователя со страницы регистрации с незаполненным полем ввода "Адрес почты"
@@ -130,7 +131,7 @@ public class LoginAndRegistrationTest {
     public void testRegisterPage_EmptyPasswordTapRegisterButton_ErrorMessageIsDisplayed() {
         //arrange
         driver.get("https://yopmail.com/ru/email-generator");
-        var username = driver.findElement(randomEmailLocator).getText().substring(0, driver.findElement(randomEmailLocator).getText().indexOf('@'));
+        var username = driver.findElement(randomEmailLocator).getText().substring(0, 10);
         var email = driver.findElement(randomEmailLocator).getText().substring(0, 10);
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
@@ -138,8 +139,8 @@ public class LoginAndRegistrationTest {
         //act
         driver.findElement(accountLocator).click();
         driver.findElement(registerButtonLocator).click();
-        driver.findElement(emailRegLocator).sendKeys(email + "@t.ru");
-        driver.findElement(usernameRegLocator).sendKeys(username);
+        driver.findElement(emailRegLocator).sendKeys(email + "u" + "@t.ru");
+        driver.findElement(usernameRegLocator).sendKeys(username + "u");
         driver.findElement(registerButtonSubmitLocator).click();
 
         //assert
@@ -156,6 +157,7 @@ public class LoginAndRegistrationTest {
         driver.get("https://yopmail.com/ru/email-generator");
         var username = driver.findElement(randomEmailLocator).getText().substring(0, driver.findElement(randomEmailLocator).getText().indexOf('@'));
         var email = driver.findElement(randomEmailLocator).getText().substring(0, 10);
+        var password = "anna8888";
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -163,7 +165,8 @@ public class LoginAndRegistrationTest {
         driver.findElement(accountLocator).click();
         driver.findElement(registerButtonLocator).click();
         driver.findElement(emailRegLocator).sendKeys(email + "@yopmail.ru");
-        driver.findElement(usernameRegLocator).sendKeys(username);
+        driver.findElement(usernameRegLocator).sendKeys(username + "u");
+        driver.findElement(passwordRegLocator).sendKeys(password);
         driver.findElement(registerButtonSubmitLocator).click();
 
         //assert
@@ -246,7 +249,7 @@ public class LoginAndRegistrationTest {
 
         //assert
         Assert.assertTrue("Сообщение об ошибки не отображается", driver.findElement(errorMessageLocator).isDisplayed());
-        var expectedError = "Error: Учетная запись с таким именем пользователя уже зарегистрирована.";
+        var expectedError = "Error: Учетная запись с такой почтой уже зарегистировавана. Пожалуйста авторизуйтесь.";
         var actualError = driver.findElement(errorMessageLocator).getText();
         Assert.assertTrue(String.format("Неправильный текст сообщения об ошибке. Сейчас: %s, Ожидали: %s", actualError, expectedError), actualError.contains(expectedError));
     }
@@ -302,6 +305,7 @@ public class LoginAndRegistrationTest {
         var actualHelloUserText = driver.findElement(helloUserLocator).getText();
         Assert.assertTrue("Текст \"Привет\" не отображается", driver.findElement(helloUserLocator).isDisplayed());
         Assert.assertTrue(String.format("Неправильный текст после регистрации. Сейчас: %s, Ожидали: %s", actualHelloUserText, expectedHelloUserText), actualHelloUserText.contains(expectedHelloUserText));
+        driver.findElement(logoutLocator).click();
     }
 
     // Вход со страницы "Мой аккаунт" - с использованием почты
@@ -329,6 +333,7 @@ public class LoginAndRegistrationTest {
         var actualHelloUserText = driver.findElement(helloUserLocator).getText();
         Assert.assertTrue("Текст \"Привет\" не отображается", driver.findElement(helloUserLocator).isDisplayed());
         Assert.assertTrue(String.format("Неправильный текст после регистрации. Сейчас: %s, Ожидали: %s", actualHelloUserText, expectedHelloUserText), actualHelloUserText.contains(expectedHelloUserText));
+        driver.findElement(logoutLocator).click();
     }
 
     // Вход со страницы "Мой аккаунт" - При незаполненном поле ввода "Имя пользователя или почта" появляется сообщение об ошибке
@@ -481,5 +486,6 @@ public class LoginAndRegistrationTest {
         var actualLogoutText = driver.findElement(logoutLocator).getText();
         Assert.assertTrue("Текст \"Выйти\" не отображается", driver.findElement(logoutLocator).isDisplayed());
         Assert.assertTrue(String.format("Неправильный текст после авторизации. Сейчас: %s, Ожидали: %s", actualLogoutText, expectedLogoutText), actualLogoutText.contains(expectedLogoutText));
+        driver.findElement(logoutLocator).click();
     }
 }
