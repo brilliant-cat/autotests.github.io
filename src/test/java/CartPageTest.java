@@ -29,7 +29,7 @@ public class CartPageTest {
 
     private static By titlePageLocator = By.xpath("//*[contains(@class, 'entry-title')]");
     private static By catalogHeaderMenuLocator = By.xpath("//*[contains(@class, 'store-menu')]//*[.='Каталог']");
-    private static By titlePageCheckoutLocator = By.cssSelector(".post-title");
+    private static By titlePageH2Locator = By.cssSelector(".post-title");
     private static By addToCartButtonLocator = By.xpath("(//*[.= 'В корзину'])[1]"); // на странице каталога
     private static By moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
     private static By removeButtonLocator = By.className("remove");
@@ -44,6 +44,7 @@ public class CartPageTest {
     private static By backShopButtonLocator = By.className("wc-backward");
     private static By couponLinkLocator = By.className("showcoupon");
     private static By couponSuccessMessageLocator = By.className("woocommerce-message");
+    private static By couponDeleteLocator = By.className("woocommerce-remove-coupon");
 
 
     // Удаление товара со страницы корзина
@@ -124,6 +125,7 @@ public class CartPageTest {
 
         //assert
         Assert.assertTrue("Скидка не отображается", driver.findElement(productPriceTotalLocator).isDisplayed());
+        driver.findElement(couponDeleteLocator).click();
     }
 
     // При отправке пустого поля для ввода купона отображается соответствующее сообщение
@@ -183,7 +185,7 @@ public class CartPageTest {
 
         //assert
         var expectedTitle = "Оформление заказа";
-        var actualTitle = driver.findElement(titlePageCheckoutLocator).getText();
+        var actualTitle = driver.findElement(titlePageH2Locator).getText();
         Assert.assertTrue(String.format("Заголовок страницы не соответствует. Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));
     }
 

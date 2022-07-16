@@ -57,6 +57,8 @@ public class HomePageTest {
     private static By booksSubMenuLocator = By.xpath("//*[contains(@class, 'sub-menu')]//a[.='Книги']");
     private static By clothesSubMenuLocator = By.xpath("//*[contains(@class, 'sub-menu')]//a[.='Одежда']");
     private static By homePageLocator = By.xpath("//*[contains(@class, 'store-menu')]//a[.='Главная']");
+    private static By addToCartButtonLocator = By.xpath("//*[.= 'В корзину']"); // на странице каталога
+    private static By moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
 
     // При нажатии на категорию "Книги" на главной странице открывается соответствующая страница
     @Test
@@ -161,16 +163,29 @@ public class HomePageTest {
         Assert.assertTrue(String.format("Неправильный заголовок страницы категории. Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));
     }
 
+    // Проверка корректного отображения главной страницы
+    @Test
+    public void testHomePage_OpenHomePage_ElementsDisplayIsCorrected() {
+        //arrange
+
+        driver.navigate().to("http://intershop5.skillbox.ru/");
+
+        //act
+
+
+        //assert
+        Assert.assertTrue("Элементы на главной странице отображаются не корректно", driver.findElement(addToCartButtonLocator).isDisplayed());
+    }
+
     // При нажатии на ссылку "Оформление заказа" в главном меню сайта открывается соответствующая страница
     @Test
     public void testHomePage_ClickHeaderMenuCheckout_TitlePageTrue() {
         //arrange
-        var addToCartButtonLocator = By.xpath("(//li[contains(@aria-hidden, 'false')]//*[.= 'В корзину'])[1]"); // на главной странице
-        var moreButtonLocator = By.xpath("//*[.= 'Подробнее']");
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
+        driver.findElement(catalogHeaderMenuLocator).click();
         driver.findElement(addToCartButtonLocator).click();
-        driver.findElement(moreButtonLocator);
+        driver.findElement(moreButtonLocator).click();
 
         //act
         driver.findElement(checkoutHeaderMenuLocator).click();
@@ -416,6 +431,8 @@ public class HomePageTest {
         var firstProductTabletsCategoryLocator = By.xpath("(//ul[contains(@class, 'product')]//li)[1]");
         var viewedProductsSectionLocator = By.cssSelector("h2.widget-title");
         var titleViewedProductsSectionLocator = By.cssSelector("#woocommerce_recently_viewed_products-2 .product-title");
+        var username = "anna";
+        var password = "anna8888";
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
 
@@ -423,10 +440,10 @@ public class HomePageTest {
         driver.findElement(tabletsCategoryCardLocator).click();
         driver.findElement(firstProductTabletsCategoryLocator).click();
         driver.findElement(homePageLocator).click();
-        driver.findElement(homePageLocator).sendKeys(Keys.PAGE_DOWN);
+        driver.findElement(homePageLocator).sendKeys(Keys.END);
 
         //assert
-        Assert.assertTrue("Секция \"Просмотренные товары\" не отображается", driver.findElement(viewedProductsSectionLocator).isDisplayed());
+        Assert.assertTrue("Секция \"Просмотренные товары\" не отображается", driver.findElements(viewedProductsSectionLocator).size() == 1);
         var expectedTitle = "iPad 2020 32gb wi-fi";
         var actualTitle = driver.findElement(titleViewedProductsSectionLocator).getText();
         Assert.assertTrue(String.format("Не найден заголовок продукта просмотренного товара в секции \"Просмотренные товары\". Сейчас: %s, Ожидали: %s", actualTitle, expectedTitle), actualTitle.contains(expectedTitle));

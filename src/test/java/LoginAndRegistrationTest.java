@@ -468,7 +468,6 @@ public class LoginAndRegistrationTest {
         var password = "anna8888";
 
         driver.navigate().to("http://intershop5.skillbox.ru/");
-        driver.navigate().to("http://intershop5.skillbox.ru/");
         driver.findElement(catalogHeaderMenuLocator).click();
         driver.findElement(addToCartButtonLocator).click();
         driver.findElement(moreButtonLocator).click();
